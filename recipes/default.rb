@@ -25,7 +25,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-if ::File.exists? "/proc/mdstat"
+if ::File.exists? "/proc/mdstat" and not (::File.new('/proc/mdstat').readline() =~ /^Personalities :\s*$/)
   package "mdadm"
 
   service "mdadm" do
