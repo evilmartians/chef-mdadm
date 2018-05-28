@@ -25,35 +25,47 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-if ::File.exists? "/proc/mdstat" and not (::File.new('/proc/mdstat').readline() =~ /^Personalities :\s*$/)
-  package "mdadm"
+if ::File.exists? '/proc/mdstat' and not (::File.new('/proc/mdstat').readline() =~ /^Personalities :\s*$/)
+  package 'mdadm'
 
-  service "mdadm" do
+  case node['platform_version'].to_f
+  when 18.04
+    file '/lib/systemd/system/mdadm.service' do
+      action :delete
+      notifies :run, 'execute[systemctl daemon-reload]', :immediately
+    end
+    execute 'systemctl daemon-reload' do
+      command 'systemctl daemon-reload'
+      action :nothing
+    end
+  end
+
+  service 'mdadm' do
     action [ :enable, :start ]
   end
 
-  template "/etc/default/mdadm" do
-    owner "root"
-    group "root"
+  template '/etc/default/mdadm' do
+    owner 'root'
+    group 'root'
     mode 0644
-    source "default-mdadm.erb"
+    source 'default-mdadm.erb'
     variables(
-      :initrdstart  => node['mdadm']['initrdstart'],
-      :autostart    => node['mdadm']['autostart'],
-      :autocheck    => node['mdadm']['autocheck'],
-      :start_daemon => node['mdadm']['start_daemon'],
-      :verbose      => node['mdadm']['verbose'],
-      :mail_to      => node['mdadm']['mail_to']
+      initrdstart:  node['mdadm']['initrdstart'],
+      autostart:    node['mdadm']['autostart'],
+      autocheck:    node['mdadm']['autocheck'],
+      start_daemon: node['mdadm']['start_daemon'],
+      verbose:      node['mdadm']['verbose'],
+      mail_to:      node['mdadm']['mail_to']
     )
-    notifies :run, "execute[generate mdadm.conf]", :immediately
+    notifies :run, 'execute[generate mdadm.conf]', :immediately
   end
 
-  execute "generate mdadm.conf" do
-    command "/usr/share/mdadm/mkconf force-generate"
+  execute 'generate mdadm.conf' do
+    command '/usr/share/mdadm/mkconf force-generate'
     action :nothing
-    environment ({'MDADM_MAILADDR__' => node['mdadm']['mail_to']})
-    user "root"
-    notifies :restart, "service[mdadm]", :delayed
+    environment({'MDADM_MAILADDR__' => node['mdadm']['mail_to'] })
+    user 'root'
+    notifies :restart, 'service[mdadm]', :delayed
   end
 end
 

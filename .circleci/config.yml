@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: library/ruby:2.4.4-jessie
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "7c:9c:4e:70:48:2b:77:05:40:d5:2a:8b:9d:e9:d8:76"
+
+      - checkout
+
+      - run:
+          name: Install deps and fix bugs
+          command: .circleci/pre_install.sh
+
+      - run:
+          name: Run testkitchen
+          command: KITCHEN_LOCAL_YAML=.kitchen.docker.yml bundle exec kitchen test
