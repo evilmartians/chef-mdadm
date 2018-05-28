@@ -16,5 +16,13 @@ jobs:
           command: .circleci/pre_install.sh
 
       - run:
+          name: Lint code with RuboCop
+          command: bundle exec rubocop --version && bundle exec rubocop .
+
+      - run:
+          name: Lint code with Foodcritic
+          command: bundle exec foodcritic --version && bundle exec foodcritic -f any .
+
+      - run:
           name: Run testkitchen
           command: KITCHEN_LOCAL_YAML=.kitchen.ec2.yml bundle exec kitchen test --parallel

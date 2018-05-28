@@ -25,7 +25,8 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-if ::File.exists? '/proc/mdstat' and not (::File.new('/proc/mdstat').readline() =~ /^Personalities :\s*$/)
+if ::File.exist? '/proc/mdstat' and
+   (::File.new('/proc/mdstat').readline !~ /^Personalities :\s*$/)
   package 'mdadm'
 
   case node['platform_version'].to_f
@@ -41,13 +42,13 @@ if ::File.exists? '/proc/mdstat' and not (::File.new('/proc/mdstat').readline() 
   end
 
   service 'mdadm' do
-    action [ :enable, :start ]
+    action %i[enable start]
   end
 
   template '/etc/default/mdadm' do
     owner 'root'
     group 'root'
-    mode 0644
+    mode '0644'
     source 'default-mdadm.erb'
     variables(
       initrdstart:  node['mdadm']['initrdstart'],
@@ -55,7 +56,7 @@ if ::File.exists? '/proc/mdstat' and not (::File.new('/proc/mdstat').readline() 
       autocheck:    node['mdadm']['autocheck'],
       start_daemon: node['mdadm']['start_daemon'],
       verbose:      node['mdadm']['verbose'],
-      mail_to:      node['mdadm']['mail_to']
+      mail_to:      node['mdadm']['mail_to'],
     )
     notifies :run, 'execute[generate mdadm.conf]', :immediately
   end
@@ -63,7 +64,7 @@ if ::File.exists? '/proc/mdstat' and not (::File.new('/proc/mdstat').readline() 
   execute 'generate mdadm.conf' do
     command '/usr/share/mdadm/mkconf force-generate'
     action :nothing
-    environment({'MDADM_MAILADDR__' => node['mdadm']['mail_to'] })
+    environment('MDADM_MAILADDR__' => node['mdadm']['mail_to'])
     user 'root'
     notifies :restart, 'service[mdadm]', :delayed
   end
