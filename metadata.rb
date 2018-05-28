@@ -1,4 +1,4 @@
-name             'mdadm'
+name             'mdadm-conf'
 maintainer       'Kirill Kouznetsov'
 maintainer_email 'agon.smith@gmail.com'
 license          'MIT'
