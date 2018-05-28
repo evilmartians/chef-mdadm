@@ -1,0 +1,21 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  product_version: 13
+
+platforms:
+  # - name: bento/ubuntu-16.04
+  - name: bento/ubuntu-18.04
+verifier:
+  name: inspec
+
+suites:
+  - name: default
+    driver:
+      vm_hostname: base-cookbook-test.vagrant.com
+    run_list:
+      - recipe[mdadm]

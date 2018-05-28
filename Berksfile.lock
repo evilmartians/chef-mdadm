@@ -1,0 +1,7 @@
+DEPENDENCIES
+  mdadm
+    path: .
+    metadata: true
+
+GRAPH
+  mdadm (0.0.2)

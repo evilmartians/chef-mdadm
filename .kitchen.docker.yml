@@ -1,0 +1,39 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: testkitchen
+  access_key_id: "<%= ENV['AWS_ACCESS_KEY_ID'] %>"
+  secret_access_key: "<%= ENV['AWS_SECRET_ACCESS_KEY'] %>"
+  security_group_ids: ["sg-6bdd4116"]
+  region: eu-west-1
+  require_chef_omnibus: true
+  subnet_id: subnet-0beb5c6d
+  associate_public_ip: true
+  instance_type: t2.small
+  shared_credentials_profile: default
+  interface: dns
+
+transport:
+  ssh_key: /root/.ssh/id_rsa_7c9c4e70482b770540d52a8b9de9d876
+  connection_timeout: 10
+  connection_retries: 5
+  username: ubuntu
+
+platforms:
+  - name: aws-ubuntu-16.04
+    driver:
+      image_id: ami-895e69f0
+  - name: aws-ubuntu-18.04
+    driver:
+      image_id: ami-46dee13f
+
+verifier:
+  name: inspec
+
+suites:
+  - name: default
+    run_list:
+      - recipe[mdadm]
+    attributes:
+      users:
+        - ubuntu
