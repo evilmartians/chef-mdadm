@@ -33,7 +33,7 @@ verifier:
 suites:
   - name: default
     run_list:
-      - recipe[mdadm]
+      - recipe[mdadm-conf]
     attributes:
       users:
         - ubuntu
