@@ -17,4 +17,4 @@ jobs:
 
       - run:
           name: Run testkitchen
-          command: KITCHEN_LOCAL_YAML=.kitchen.docker.yml bundle exec kitchen test
+          command: KITCHEN_LOCAL_YAML=.kitchen.ec2.yml bundle exec kitchen test
