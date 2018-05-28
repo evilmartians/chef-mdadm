@@ -8,7 +8,7 @@ provisioner:
   product_version: 13
 
 platforms:
-  # - name: bento/ubuntu-16.04
+  - name: bento/ubuntu-16.04
   - name: bento/ubuntu-18.04
 verifier:
   name: inspec
