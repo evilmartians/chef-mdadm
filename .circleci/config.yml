@@ -17,11 +17,11 @@ jobs:
 
       - run:
           name: Validate codestyle via foodcritic
-          command: bundle exec foodcritic
+          command: bundle exec foodcritic .
 
       - run:
           name: Validate codestyle via rubocop
-          command: bundle exec rubocop
+          command: bundle exec rubocop .
 
       - run:
           name: Run testkitchen
