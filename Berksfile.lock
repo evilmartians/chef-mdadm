@@ -1,7 +1,7 @@
 DEPENDENCIES
-  mdadm
+  mdadm-conf
     path: .
     metadata: true
 
 GRAPH
-  mdadm (0.0.2)
+  mdadm-conf (0.0.4)
