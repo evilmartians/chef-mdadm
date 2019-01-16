@@ -4,13 +4,13 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     ast (2.4.0)
-    aws-sdk (2.11.205)
-      aws-sdk-resources (= 2.11.205)
-    aws-sdk-core (2.11.205)
+    aws-sdk (2.11.206)
+      aws-sdk-resources (= 2.11.206)
+    aws-sdk-core (2.11.206)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.11.205)
-      aws-sdk-core (= 2.11.205)
+    aws-sdk-resources (2.11.206)
+      aws-sdk-core (= 2.11.206)
     aws-sigv4 (1.0.3)
     azure_graph_rbac (0.17.0)
       ms_rest_azure (~> 0.11.0)
@@ -263,7 +263,7 @@ GEM
       wmi-lite (~> 1.0)
     os (1.0.0)
     parallel (1.12.1)
-    parser (2.5.3.0)
+    parser (2.6.0.0)
       ast (~> 2.4.0)
     parslet (1.8.2)
     pastel (0.7.2)
@@ -336,7 +336,7 @@ GEM
     solve (4.0.2)
       molinillo (~> 0.6)
       semverse (>= 1.1, < 4.0)
-    specinfra (2.76.7)
+    specinfra (2.76.8)
       net-scp
       net-ssh (>= 2.7)
       net-telnet (= 0.1.1)
@@ -428,7 +428,7 @@ GEM
       rubyzip (~> 1.1)
       winrm (~> 2.0)
     wisper (2.0.0)
-    wmi-lite (1.0.1)
+    wmi-lite (1.0.2)
 
 PLATFORMS
   ruby
@@ -455,4 +455,4 @@ DEPENDENCIES
   vagrant-berkshelf
 
 BUNDLED WITH
-   1.17.2
+   2.0.1

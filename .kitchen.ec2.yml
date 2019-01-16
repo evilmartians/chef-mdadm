@@ -14,7 +14,7 @@ driver:
   interface: dns
 
 transport:
-  ssh_key: /root/.ssh/id_rsa_7c9c4e70482b770540d52a8b9de9d876
+  ssh_key: ~/.ssh/id_rsa_7c9c4e70482b770540d52a8b9de9d876
   connection_timeout: 10
   connection_retries: 5
   username: ubuntu

@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.0-stretch
+      - image: circleci/ruby:2.5
 
     steps:
       - add_ssh_keys:
@@ -10,10 +10,6 @@ jobs:
             - "7c:9c:4e:70:48:2b:77:05:40:d5:2a:8b:9d:e9:d8:76"
 
       - checkout
-
-      - run:
-          name: LS
-          command: pwd && ls -la
 
       - run:
           name: Install deps and fix bugs
@@ -30,7 +26,7 @@ jobs:
       - run:
           name: Run testkitchen
           command: KITCHEN_LOCAL_YAML=.kitchen.ec2.yml bundle exec kitchen test
-      #
-      # - run:
-      #     name: Upload to supermarket
-      #     command: bundle exec knife cookbook site share chef-mdadm "Operating Systems & Virtualization"
+
+      - run:
+          name: Upload to supermarket
+          command: bundle exec knife cookbook site share mdadm-conf "Operating Systems & Virtualization"
