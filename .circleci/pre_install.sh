@@ -23,3 +23,17 @@ gem update --system 2.7.5 --no-doc
 
 bundle exec kitchen --version
 bundle exec berks --version
+
+#
+# Add knife.rb template
+#
+
+mkdir .chef
+cat <<EOF > .chef/knife.rb
+current_dir = File.dirname(__FILE__)
+log_level                :info
+log_location             STDOUT
+node_name                "gfrntz"
+client_key               "#{current_dir}/gfrntz.pem"
+cookbook_path            ["#{current_dir}"]
+EOF
