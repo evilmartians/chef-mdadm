@@ -1,24 +1,36 @@
 version: 2
+
+workflows:
+  version: 2
+  untagged_build:
+    jobs:
+      - untagged
+  tagged_build:
+    jobs:
+      - tagged:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+build: &build
+
 jobs:
-  build:
+  tagged:
     docker:
       - image: circleci/ruby:2.5
-
     steps:
       - add_ssh_keys:
           fingerprints:
             - "7c:9c:4e:70:48:2b:77:05:40:d5:2a:8b:9d:e9:d8:76"
-
       - checkout
-
       - run:
           name: Install deps and fix bugs
           command: .circleci/pre_install.sh
-
       - run:
           name: Validate codestyle via foodcritic
           command: bundle exec foodcritic .
-
       - run:
           name: Validate codestyle via rubocop
           command: bundle exec rubocop .
@@ -26,7 +38,28 @@ jobs:
       - run:
           name: Run testkitchen
           command: KITCHEN_LOCAL_YAML=.kitchen.ec2.yml bundle exec kitchen test
-
       - run:
           name: Upload to supermarket
           command: bundle exec knife cookbook site share mdadm-conf "Operating Systems & Virtualization"
+
+  untagged:
+    docker:
+      - image: circleci/ruby:2.5
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "7c:9c:4e:70:48:2b:77:05:40:d5:2a:8b:9d:e9:d8:76"
+      - checkout
+      - run:
+          name: Install deps and fix bugs
+          command: .circleci/pre_install.sh
+      - run:
+          name: Validate codestyle via foodcritic
+          command: bundle exec foodcritic .
+      - run:
+          name: Validate codestyle via rubocop
+          command: bundle exec rubocop .
+
+      - run:
+          name: Run testkitchen
+          command: KITCHEN_LOCAL_YAML=.kitchen.ec2.yml bundle exec kitchen test

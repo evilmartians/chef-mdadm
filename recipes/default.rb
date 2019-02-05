@@ -26,11 +26,11 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 if ::File.exist? '/proc/mdstat' and
-   (::File.new('/proc/mdstat').readline !~ /^Personalities :\s*$/)
+   (::File.new('/proc/mdstat').readline !~ /^Personalities :\s*$/) or platform_family?('debian')
   package 'mdadm'
 
-  case node['platform_version'].to_f
-  when 18.04
+  if platform?('ubuntu') and node['platform_version'].to_f >= 18.04 or
+     platform?('debian') and node['platform_version'].to_i >= 8
     file '/lib/systemd/system/mdadm.service' do
       action :delete
       notifies :run, 'execute[systemctl daemon-reload]', :immediately

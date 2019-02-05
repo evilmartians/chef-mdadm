@@ -16,7 +16,7 @@ The following platforms are supported by this cookbook, meaning that the recipes
 
 ## Recipes
 
-* `mdadm` - The default recipe.
+* `mdadm-conf` - The default recipe.
 
 # Usage
 
@@ -44,10 +44,14 @@ default[:mdadm][:verbose]         = true
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## Maintainers
+
+* gfrntz (<gfrntz@evilmartians.com>)
+* dragonsmith (<agon.smith@gmail.com>)
 
 ## License
 
-**mdadm**
+**mdadm-conf**
 
 * Freely distributable and licensed under the [MIT license](http://phlipper.mit-license.org/2012/license.html).
 * Copyright (c) 2013 Kirill Kouznetsov (<agon.smith@gmail.com>)
