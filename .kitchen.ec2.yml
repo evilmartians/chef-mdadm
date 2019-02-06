@@ -26,6 +26,12 @@ platforms:
   - name: aws-ubuntu-18.04
     driver:
       image_id: ami-46dee13f
+  - name: aws-debian-8
+    driver:
+      image_id: ami-003f19e0e687de1cd
+  - name: aws-debian-9
+    driver:
+      image_id: ami-003f19e0e687de1cd
 
 verifier:
   name: inspec
