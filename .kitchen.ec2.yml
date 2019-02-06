@@ -29,9 +29,13 @@ platforms:
   - name: aws-debian-8
     driver:
       image_id: ami-02fc24d56bc5f3d67
+    transport:
+      username: admin
   - name: aws-debian-9
     driver:
       image_id: ami-02fc24d56bc5f3d67
+    transport:
+      username: admin
 
 verifier:
   name: inspec
